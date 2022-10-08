@@ -14,10 +14,7 @@ document.body.appendChild(can);
 
 let field = [];
 for (let row = 0; row < BLOCKS_ROW; row++) {
-    field[row] = [];
-    for (let col = 0; col < BLOCKS_COL; col++) {
-        field[row][col] = 0;
-    }
+    field[row] = Array(BLOCKS_COL).fill(0);
 }
 
 let frame = 0;
