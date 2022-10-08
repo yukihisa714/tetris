@@ -108,11 +108,6 @@ function mainLoop() {
     mino.draw();
     mino.update();
 
-    con.fillStyle = "white"
-    con.fillText(keyOpe.ArrowUp, 10, 10);
-    con.fillText(keyOpe.ArrowDown, 10, 20);
-    con.fillText(keyOpe.ArrowLeft, 10, 30);
-    con.fillText(keyOpe.ArrowRight, 10, 40);
 }
 
 setInterval(mainLoop, 1000 / 60);
