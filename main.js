@@ -20,6 +20,10 @@ for (let row = 0; row < BLOCKS_ROW; row++) {
     }
 }
 
+// console.log(field === field2);
+// console.log(field);
+// console.log(field2);
+
 let frame = 0;
 
 const keyOpe = {
