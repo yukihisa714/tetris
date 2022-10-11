@@ -281,7 +281,6 @@ class Mino {
                     this.setMino();
                     removeLine();
                     makeMino();
-                    // mino = new Mino(3, 0, 1);
                 }
             }
             else {
@@ -300,4 +299,3 @@ function makeMino() {
     mino = new Mino(3, 0, type, true);
     predictMino = new Mino(3, 0, type, false);
 }
-// mino.setMino();
