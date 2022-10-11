@@ -182,6 +182,7 @@ class Mino {
         this.maxStrength = 60 * 1;
         this.strength = this.maxStrength;
         this.deathStart = false;
+        this.reality = reality;
 
         this.fillColor = reality ? colors[this.type] : "silver";
         this.strokeColor = reality ? "black" : "lightgray";
@@ -233,20 +234,23 @@ class Mino {
      * @returns 
      */
     moveMino(mvoeX, moveY, rotate) {
-        if (!this.check(mvoeX, moveY, rotate)) {
-            return;
+        if (this.check(mvoeX, moveY, rotate)) {
+            this.x += mvoeX;
+            this.y += moveY;
+            this.rotate += rotate;
+            this.rotate = this.rotate % 4;
         }
-        this.x += mvoeX;
-        this.y += moveY;
-        this.rotate += rotate;
-        this.rotate = this.rotate % 4;
     }
     // ミノを下まで一気に落とす
     dropMino() {
         while (this.check(0, 1, 0)) {
             this.moveMino(0, 1, 0);
         }
-        removeLine();
+        if (this.reality) {
+            this.setMino();
+            removeLine();
+            makeMino();
+        }
     }
     draw() {
         for (let y = 0; y < 4; y++) {
@@ -275,8 +279,8 @@ class Mino {
                 this.strength--;
                 if (!this.strength) {
                     this.setMino();
-                    makeMino();
                     removeLine();
+                    makeMino();
                     // mino = new Mino(3, 0, 1);
                 }
             }
