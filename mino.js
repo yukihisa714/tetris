@@ -279,7 +279,7 @@ class Mino {
     update() {
 
         this.keyControl("ArrowUp", 15, 0, 0, 1);
-        this.keyControl("ArrowDown", 15, 0, 1, 0);
+        this.keyControl("ArrowDown", 10, 0, 1, 0);
         this.keyControl("ArrowLeft", 10, -1, 0, 0);
         this.keyControl("ArrowRight", 10, 1, 0, 0);
         this.keyControl("z", 15, 0, 0, -1);
@@ -303,10 +303,30 @@ class Mino {
 
 let mino;
 let predictMino;
-makeMino();
+
+/**
+ * 
+ * @param {Number} min 以上
+ * @param {Number} max 未満
+ */
+function makeRandom(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+let typeNumbers = [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7];
 
 function makeMino() {
-    const type = Math.floor(Math.random() * 7) + 1;
+    const num = makeRandom(0, typeNumbers.length);
+    const type = typeNumbers[num]
+    // console.log(type);
     mino = new Mino(3, 0, type, true);
     predictMino = new Mino(3, 0, type, false);
+
+    typeNumbers.splice(num, 1);
+    if (typeNumbers.length < 7) {
+        typeNumbers = [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7];
+    }
+    // console.log(typeNumbers);
 }
+
+makeMino();

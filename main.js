@@ -68,7 +68,6 @@ function removeLine() {
     }
 }
 
-
 function drawOneBlock(x, y, fillColor, strokeColor) {
     con.fillStyle = fillColor;
     con.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
