@@ -188,10 +188,12 @@ class Mino {
         this.strokeColor = reality ? "black" : "lightgray";
 
         this.keyCount = {
-            ArrowUp: 0,
-            ArrowDown: 0,
-            ArrowLeft: 0,
-            ArrowRight: 0,
+            "ArrowUp": 0,
+            "ArrowDown": 0,
+            "ArrowLeft": 0,
+            "ArrowRight": 0,
+            "z": 0,
+            "x": 0,
         };
     }
     // ミノをフィールドに固定する
@@ -216,7 +218,7 @@ class Mino {
     check(mvoeX, moveY, rotate) {
         for (let y = 0; y < 4; y++) {
             for (let x = 0; x < 4; x++) {
-                if (MINO_SHAPE[this.type][(this.rotate + rotate) % 4][y][x]) {
+                if (MINO_SHAPE[this.type][(this.rotate + rotate + 4) % 4][y][x]) {
                     if (this.x + mvoeX + x < 0 || BLOCKS_COL <= this.x + mvoeX + x) return false;
                     if (this.y + moveY + y < 0 || BLOCKS_ROW <= this.y + moveY + y) return false;
                     if (field[this.y + moveY + y][this.x + mvoeX + x]) return false;
@@ -238,7 +240,7 @@ class Mino {
             this.x += mvoeX;
             this.y += moveY;
             this.rotate += rotate;
-            this.rotate = this.rotate % 4;
+            this.rotate = (this.rotate + 4) % 4;
         }
     }
     // ミノを下まで一気に落とす
@@ -262,17 +264,26 @@ class Mino {
             }
         }
     }
+    /**
+     * 
+     * @param {String} key 例) "ArrowUp"
+     * @param {Number} often 
+     * @param {Number} x x変異
+     * @param {Number} y y変異
+     * @param {Number} r rotate変異
+     */
+    keyControl(key, often, x, y, r) {
+        this.keyCount[key] = keyOpe[key] ? this.keyCount[key] + 1 : 0;
+        if (this.keyCount[key] % often === 1) this.moveMino(x, y, r);
+    }
     update() {
 
-        this.keyCount.ArrowUp = (keyOpe.ArrowUp) ? this.keyCount.ArrowUp + 1 : 0;
-        this.keyCount.ArrowDown = (keyOpe.ArrowDown) ? this.keyCount.ArrowDown + 1 : 0;
-        this.keyCount.ArrowLeft = (keyOpe.ArrowLeft) ? this.keyCount.ArrowLeft + 1 : 0;
-        this.keyCount.ArrowRight = (keyOpe.ArrowRight) ? this.keyCount.ArrowRight + 1 : 0;
-
-        if (this.keyCount.ArrowUp % 15 === 1) this.moveMino(0, 0, 1);
-        if (this.keyCount.ArrowDown % 10 === 1) this.moveMino(0, 1, 0);
-        if (this.keyCount.ArrowLeft % 10 === 1) this.moveMino(-1, 0, 0);
-        if (this.keyCount.ArrowRight % 10 === 1) this.moveMino(1, 0, 0);
+        this.keyControl("ArrowUp", 15, 0, 0, 1);
+        this.keyControl("ArrowDown", 15, 0, 1, 0);
+        this.keyControl("ArrowLeft", 10, -1, 0, 0);
+        this.keyControl("ArrowRight", 10, 1, 0, 0);
+        this.keyControl("z", 15, 0, 0, -1);
+        this.keyControl("x", 15, 0, 0, 1);
 
         if (!this.check(0, 1, 0)) {
             if (this.deathStart) {

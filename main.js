@@ -24,10 +24,12 @@ const keyOpe = {
     ArrowDown: false,
     ArrowLeft: false,
     ArrowRight: false,
+    z: false,
+    x: false,
 };
 
 document.onkeydown = (e) => {
-    // console.log(e.key);
+    console.log(e.key, typeof (e.key));
     keyOpe[e.key] = true;
 
     switch (e.key) {
