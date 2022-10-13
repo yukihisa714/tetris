@@ -29,7 +29,7 @@ const keyOpe = {
 };
 
 document.onkeydown = (e) => {
-    console.log(e.key, typeof (e.key));
+    // console.log(e.key, typeof (e.key));
     keyOpe[e.key] = true;
 
     switch (e.key) {

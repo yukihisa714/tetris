@@ -313,20 +313,32 @@ function makeRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-let typeNumbers = [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7];
+let typeNums = [1, 2, 3, 4, 5, 6, 7];
+let futureTypes = [];
+
+function makeFutureTypes() {
+    while (futureTypes.length < 7) {
+        const num = makeRandom(0, typeNums.length);
+        const type = typeNums[num];
+        futureTypes.push(type);
+        typeNums.splice(num, 1);
+        if (typeNums.length === 0) {
+            typeNums = [1, 2, 3, 4, 5, 6, 7];
+        }
+    }
+}
+makeFutureTypes();
 
 function makeMino() {
-    const num = makeRandom(0, typeNumbers.length);
-    const type = typeNumbers[num]
-    // console.log(type);
-    mino = new Mino(3, 0, type, true);
-    predictMino = new Mino(3, 0, type, false);
-
-    typeNumbers.splice(num, 1);
-    if (typeNumbers.length < 7) {
-        typeNumbers = [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7];
-    }
-    // console.log(typeNumbers);
+    let newMino = futureTypes[0];
+    mino = new Mino(3, 0, newMino, true);
+    predictMino = new Mino(3, 0, newMino, false);
+    futureTypes.shift();
+    makeFutureTypes();
+    console.log(futureTypes);
+    console.log(newMino);
 }
+
+console.log(futureTypes);
 
 makeMino();
