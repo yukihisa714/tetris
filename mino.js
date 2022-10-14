@@ -339,6 +339,4 @@ function makeMino() {
     console.log(newMino);
 }
 
-console.log(futureTypes);
-
 makeMino();

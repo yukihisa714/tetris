@@ -11,6 +11,12 @@ can.height = FIELD_HEIGHT;
 // can.style.background = "lightgray";
 document.body.appendChild(can);
 
+// const fcan = document.createElement("canvas");
+// const fcon = fcan.getContext("2d");
+// fcan.width = BLOCK_SIZE * 4;
+// fcan.height = BLOCK_SIZE * 4 * 5;
+// fcan.style.background = "black";
+// document.body.appendChild(fcan);
 
 let field = [];
 for (let row = 0; row < BLOCKS_ROW; row++) {
