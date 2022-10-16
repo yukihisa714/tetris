@@ -1,23 +1,3 @@
-const BLOCK_SIZE = 20;
-const BLOCKS_COL = 10;
-const BLOCKS_ROW = 20;
-const FIELD_WIDtH = BLOCK_SIZE * BLOCKS_COL;
-const FIELD_HEIGHT = BLOCK_SIZE * BLOCKS_ROW;
-
-const can = document.createElement("canvas");
-const con = can.getContext("2d");
-can.width = FIELD_WIDtH;
-can.height = FIELD_HEIGHT;
-// can.style.background = "lightgray";
-document.body.appendChild(can);
-
-// const fcan = document.createElement("canvas");
-// const fcon = fcan.getContext("2d");
-// fcan.width = BLOCK_SIZE * 4;
-// fcan.height = BLOCK_SIZE * 4 * 5;
-// fcan.style.background = "black";
-// document.body.appendChild(fcan);
-
 let field = [];
 for (let row = 0; row < BLOCKS_ROW; row++) {
     field[row] = Array(BLOCKS_COL).fill(0);
@@ -25,17 +5,10 @@ for (let row = 0; row < BLOCKS_ROW; row++) {
 
 let frame = 0;
 
-const keyOpe = {
-    ArrowUp: false,
-    ArrowDown: false,
-    ArrowLeft: false,
-    ArrowRight: false,
-    z: false,
-    x: false,
-};
+const keyOpe = {};
 
 document.onkeydown = (e) => {
-    // console.log(e.key, typeof (e.key));
+    console.log(e.key, typeof (e.key));
     keyOpe[e.key] = true;
 
     switch (e.key) {
@@ -74,26 +47,23 @@ function removeLine() {
     }
 }
 
-function drawOneBlock(x, y, fillColor, strokeColor) {
-    con.fillStyle = fillColor;
-    con.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-    con.strokeStyle = strokeColor;
-    con.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+function drawOneBlock(x, y, fillColor, strokeColor, ctx) {
+    ctx.fillStyle = fillColor;
+    ctx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+    ctx.strokeStyle = strokeColor;
+    ctx.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 }
 
 function drawAllBlocks() {
     for (let y = 0; y < BLOCKS_ROW; y++) {
         for (let x = 0; x < BLOCKS_COL; x++) {
-            drawOneBlock(x, y, colors[field[y][x]], "dimgray");
+            drawOneBlock(x, y, colors[field[y][x]], "dimgray", con);
         }
     }
 }
 
 function mainLoop() {
     frame++;
-    con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
-    drawAllBlocks();
-
     if (!mino.check(0, 0, 0)) {
         nowGameState = GAME_STATES.afterGame;
     }
@@ -108,9 +78,12 @@ function mainLoop() {
     predictMino.rotate = mino.rotate;
     predictMino.dropMino();
 
+    mino.update();
+
+    con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
+    drawAllBlocks();
     predictMino.draw();
     mino.draw();
-    mino.update();
 
 }
 

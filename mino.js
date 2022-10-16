@@ -174,7 +174,7 @@ const MINO_SHAPE = [
 ];
 
 class Mino {
-    constructor(x, y, type, reality) {
+    constructor(x, y, type, reality, ctx) {
         this.x = x;
         this.y = y;
         this.type = type;
@@ -183,6 +183,7 @@ class Mino {
         this.strength = this.maxStrength;
         this.deathStart = false;
         this.reality = reality;
+        this.ctx = ctx;
 
         this.fillColor = reality ? colors[this.type] : "silver";
         this.strokeColor = reality ? "black" : "lightgray";
@@ -259,7 +260,7 @@ class Mino {
             for (let x = 0; x < 4; x++) {
                 const p = MINO_SHAPE[this.type][this.rotate][y][x];
                 if (p) {
-                    drawOneBlock(this.x + x, this.y + y, this.fillColor, this.strokeColor);
+                    drawOneBlock(this.x + x, this.y + y, this.fillColor, this.strokeColor, this.ctx);
                 }
             }
         }
@@ -304,15 +305,6 @@ class Mino {
 let mino;
 let predictMino;
 
-/**
- * 
- * @param {Number} min 以上
- * @param {Number} max 未満
- */
-function makeRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
 let futureTypes = [];
 
@@ -331,8 +323,8 @@ makeFutureTypes();
 
 function makeMino() {
     let newMino = futureTypes[0];
-    mino = new Mino(3, 0, newMino, true);
-    predictMino = new Mino(3, 0, newMino, false);
+    mino = new Mino(3, 0, newMino, true, con);
+    predictMino = new Mino(3, 0, newMino, false, con);
     futureTypes.shift();
     makeFutureTypes();
     console.log(futureTypes);
