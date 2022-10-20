@@ -3,6 +3,11 @@ for (let row = 0; row < BLOCKS_ROW; row++) {
     field[row] = Array(BLOCKS_COL).fill(0);
 }
 
+let futureField = [];
+for (let row = 0; row < FUTURE_BLOCKS_ROW; row++) {
+    futureField[row] = Array(FUTURE_BLOCKS_COL).fill(0);
+}
+
 let frame = 0;
 
 const keyOpe = {};
@@ -62,6 +67,14 @@ function drawAllBlocks() {
     }
 }
 
+function drawAllFutureBlocks() {
+    for (let y = 0; y < FUTURE_BLOCKS_ROW; y++) {
+        for (let x = 0; x < FUTURE_BLOCKS_COL; x++) {
+            drawOneBlock(x, y, colors[futureField[y][x]], "dimgray", fcon);
+        }
+    }
+}
+
 function mainLoop() {
     frame++;
     if (!mino.check(0, 0, 0)) {
@@ -82,6 +95,10 @@ function mainLoop() {
 
     con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
     drawAllBlocks();
+    drawAllFutureBlocks();
+    for (const fMino of futureMinos) {
+        fMino.draw();
+    }
     predictMino.draw();
     mino.draw();
 

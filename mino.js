@@ -307,12 +307,14 @@ let predictMino;
 
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
 let futureTypes = [];
+let futureMinos = [];
 
 function makeFutureTypes() {
     while (futureTypes.length < 7) {
         const num = makeRandom(0, typeNums.length);
         const type = typeNums[num];
         futureTypes.push(type);
+        futureMinos.push(new Mino(0, (futureMinos.length - 1) * 4, type, true, fcon));
         typeNums.splice(num, 1);
         if (typeNums.length === 0) {
             typeNums = [1, 2, 3, 4, 5, 6, 7];
@@ -326,6 +328,10 @@ function makeMino() {
     mino = new Mino(3, 0, newMino, true, con);
     predictMino = new Mino(3, 0, newMino, false, con);
     futureTypes.shift();
+    futureMinos.shift();
+    for (const fMino of futureMinos) {
+        fMino.y = futureMinos.indexOf(fMino) * 4;
+    }
     makeFutureTypes();
     console.log(futureTypes);
     console.log(newMino);
