@@ -174,9 +174,10 @@ const MINO_SHAPE = [
 ];
 
 class Mino {
-    constructor(x, y, type, reality, ctx) {
+    constructor(x, y, blockSize, type, reality, ctx) {
         this.x = x;
         this.y = y;
+        this.blockSize = blockSize;
         this.type = type;
         this.rotate = 0;
         this.maxStrength = 60 * 1;
@@ -260,7 +261,7 @@ class Mino {
             for (let x = 0; x < 4; x++) {
                 const p = MINO_SHAPE[this.type][this.rotate][y][x];
                 if (p) {
-                    drawOneBlock(this.x + x, this.y + y, this.fillColor, this.strokeColor, this.ctx);
+                    drawOneBlock(this.x + x, this.y + y, this.blockSize, this.fillColor, this.strokeColor, this.ctx);
                 }
             }
         }
@@ -310,31 +311,33 @@ let futureTypes = [];
 let futureMinos = [];
 
 function makeFutureTypes() {
-    while (futureTypes.length < 7) {
+    while (futureTypes.length < FUTURE_BLOCKS_ROW / 4) {
         const num = makeRandom(0, typeNums.length);
         const type = typeNums[num];
         futureTypes.push(type);
-        futureMinos.push(new Mino(0, (futureMinos.length - 1) * 4, type, true, fcon));
+        futureMinos.push(new Mino(0, 0, FUTURE_BLOCK_SIZE, type, true, fcon));
         typeNums.splice(num, 1);
         if (typeNums.length === 0) {
             typeNums = [1, 2, 3, 4, 5, 6, 7];
         }
     }
 }
-makeFutureTypes();
 
 function makeMino() {
     let newMino = futureTypes[0];
-    mino = new Mino(3, 0, newMino, true, con);
-    predictMino = new Mino(3, 0, newMino, false, con);
+    mino = new Mino(3, 0, BLOCK_SIZE, newMino, true, con);
+    predictMino = new Mino(3, 0, BLOCK_SIZE, newMino, false, con);
+
     futureTypes.shift();
     futureMinos.shift();
+    makeFutureTypes();
     for (const fMino of futureMinos) {
         fMino.y = futureMinos.indexOf(fMino) * 4;
     }
-    makeFutureTypes();
+
     console.log(futureTypes);
     console.log(newMino);
 }
 
+makeFutureTypes();
 makeMino();

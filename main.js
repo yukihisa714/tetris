@@ -52,17 +52,17 @@ function removeLine() {
     }
 }
 
-function drawOneBlock(x, y, fillColor, strokeColor, ctx) {
+function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
     ctx.fillStyle = fillColor;
-    ctx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+    ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
     ctx.strokeStyle = strokeColor;
-    ctx.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+    ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
 }
 
 function drawAllBlocks() {
     for (let y = 0; y < BLOCKS_ROW; y++) {
         for (let x = 0; x < BLOCKS_COL; x++) {
-            drawOneBlock(x, y, colors[field[y][x]], "dimgray", con);
+            drawOneBlock(x, y, BLOCK_SIZE, colors[field[y][x]], "dimgray", con);
         }
     }
 }
@@ -70,7 +70,7 @@ function drawAllBlocks() {
 function drawAllFutureBlocks() {
     for (let y = 0; y < FUTURE_BLOCKS_ROW; y++) {
         for (let x = 0; x < FUTURE_BLOCKS_COL; x++) {
-            drawOneBlock(x, y, colors[futureField[y][x]], "dimgray", fcon);
+            drawOneBlock(x, y, FUTURE_BLOCK_SIZE, colors[futureField[y][x]], "dimgray", fcon);
         }
     }
 }
@@ -94,8 +94,9 @@ function mainLoop() {
     mino.update();
 
     con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
+    fcon.clearRect(0, 0, FUTURE_FIELD_WIDTH, FUTURE_FIELD_HEIGHT);
     drawAllBlocks();
-    drawAllFutureBlocks();
+    // drawAllFutureBlocks();
     for (const fMino of futureMinos) {
         fMino.draw();
     }
