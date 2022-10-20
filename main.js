@@ -1,3 +1,8 @@
+let holdField = [];
+for (let row = 0; row < HOLD_BLOCKS_ROW; row++) {
+    holdField[row] = Array(HOLD_BLOCKS_COL).fill(0);
+}
+
 let field = [];
 for (let row = 0; row < BLOCKS_ROW; row++) {
     field[row] = Array(BLOCKS_COL).fill(0);
@@ -19,6 +24,9 @@ document.onkeydown = (e) => {
     switch (e.key) {
         case " ":
             mino.dropMino();
+            break;
+        case "Shift":
+            makeHoldMino();
             break;
 
         default:
@@ -59,6 +67,14 @@ function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
     ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
 }
 
+// function drawAllHoldBlocks() {
+//     for (let y = 0; y < HOLD_BLOCKS_ROW; y++) {
+//         for (let x = 0; x < HOLD_BLOCKS_COL; x++) {
+//             drawOneBlock(x, y, HOLD_BLOCK_SIZE, colors[holdField[y][x]], "dimgray", hcon);
+//         }
+//     }
+// }
+
 function drawAllBlocks() {
     for (let y = 0; y < BLOCKS_ROW; y++) {
         for (let x = 0; x < BLOCKS_COL; x++) {
@@ -67,13 +83,13 @@ function drawAllBlocks() {
     }
 }
 
-function drawAllFutureBlocks() {
-    for (let y = 0; y < FUTURE_BLOCKS_ROW; y++) {
-        for (let x = 0; x < FUTURE_BLOCKS_COL; x++) {
-            drawOneBlock(x, y, FUTURE_BLOCK_SIZE, colors[futureField[y][x]], "dimgray", fcon);
-        }
-    }
-}
+// function drawAllFutureBlocks() {
+//     for (let y = 0; y < FUTURE_BLOCKS_ROW; y++) {
+//         for (let x = 0; x < FUTURE_BLOCKS_COL; x++) {
+//             drawOneBlock(x, y, FUTURE_BLOCK_SIZE, colors[futureField[y][x]], "dimgray", fcon);
+//         }
+//     }
+// }
 
 function mainLoop() {
     frame++;
@@ -89,16 +105,21 @@ function mainLoop() {
     predictMino.x = mino.x;
     predictMino.y = mino.y;
     predictMino.rotate = mino.rotate;
+    predictMino.type = mino.type;
     predictMino.dropMino();
 
     mino.update();
 
+    hcon.clearRect(0, 0, HOLD_FIELD_WIDTH, HOLD_FIELD_HEIGHT);
     con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
     fcon.clearRect(0, 0, FUTURE_FIELD_WIDTH, FUTURE_FIELD_HEIGHT);
     drawAllBlocks();
     // drawAllFutureBlocks();
     for (const fMino of futureMinos) {
         fMino.draw();
+    }
+    if (holdMino) {
+        holdMino.draw();
     }
     predictMino.draw();
     mino.draw();

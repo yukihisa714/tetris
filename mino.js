@@ -305,6 +305,7 @@ class Mino {
 
 let mino;
 let predictMino;
+let holdMino;
 
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
 let futureTypes = [];
@@ -341,3 +342,14 @@ function makeMino() {
 
 makeFutureTypes();
 makeMino();
+
+function makeHoldMino() {
+    const tmpMino = mino;
+    if (holdMino) {
+        mino = new Mino(3, 0, BLOCK_SIZE, holdMino.type, true, con);
+    }
+    else {
+        makeMino();
+    }
+    holdMino = new Mino(0, 0, HOLD_BLOCK_SIZE, tmpMino.type, true, hcon);
+}
