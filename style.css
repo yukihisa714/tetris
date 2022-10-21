@@ -2,8 +2,12 @@ canvas {
     margin: 0.5rem;
 }
 
-#tetris{
-    width: 375px;
+#tetris {
+    width: fit-content;
     display: flex;
     justify-content: space-around;
+}
+
+.section-display {
+    text-align: center;
 }
