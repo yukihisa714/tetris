@@ -235,7 +235,7 @@ class Mino {
      * @param {Number} mvoeX 左右移動
      * @param {Number} moveY 上下移動
      * @param {Number} rotate 右回転
-     * @returns 
+     * @returns True or False 移動が出来たかどうか
      */
     moveMino(mvoeX, moveY, rotate) {
         if (this.check(mvoeX, moveY, rotate)) {
@@ -243,12 +243,21 @@ class Mino {
             this.y += moveY;
             this.rotate += rotate;
             this.rotate = (this.rotate + 4) % 4;
+            if (this.reality) {
+                dropPredictMino();
+            }
+            return true;
+        }
+        else {
+            return false;
         }
     }
     // ミノを下まで一気に落とす
     dropMino() {
-        while (this.check(0, 1, 0)) {
-            this.moveMino(0, 1, 0);
+        while (true) {
+            if (!this.moveMino(0, 1, 0)) {
+                break;
+            }
         }
         if (this.reality) {
             this.setMino();
@@ -303,6 +312,14 @@ class Mino {
     }
 }
 
+function dropPredictMino() {
+    predictMino.x = mino.x;
+    predictMino.y = mino.y;
+    predictMino.rotate = mino.rotate;
+    predictMino.type = mino.type;
+    predictMino.dropMino();
+}
+
 let mino;
 let predictMino;
 let holdMino;
@@ -335,6 +352,7 @@ function makeMino() {
     for (const fMino of futureMinos) {
         fMino.y = futureMinos.indexOf(fMino) * 4;
     }
+    dropPredictMino();
 
     console.log(futureTypes);
     console.log(newMino);
@@ -347,6 +365,7 @@ function makeHoldMino() {
     const tmpMino = mino;
     if (holdMino) {
         mino = new Mino(3, 0, BLOCK_SIZE, holdMino.type, true, con);
+        dropPredictMino();
     }
     else {
         makeMino();

@@ -1,18 +1,3 @@
-let holdField = [];
-for (let row = 0; row < HOLD_BLOCKS_ROW; row++) {
-    holdField[row] = Array(HOLD_BLOCKS_COL).fill(0);
-}
-
-let field = [];
-for (let row = 0; row < BLOCKS_ROW; row++) {
-    field[row] = Array(BLOCKS_COL).fill(0);
-}
-
-let futureField = [];
-for (let row = 0; row < FUTURE_BLOCKS_ROW; row++) {
-    futureField[row] = Array(FUTURE_BLOCKS_COL).fill(0);
-}
-
 let frame = 0;
 
 const keyOpe = {};
@@ -102,11 +87,6 @@ function mainLoop() {
         removeLine();
     }
 
-    predictMino.x = mino.x;
-    predictMino.y = mino.y;
-    predictMino.rotate = mino.rotate;
-    predictMino.type = mino.type;
-    predictMino.dropMino();
 
     mino.update();
 
