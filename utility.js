@@ -3,11 +3,6 @@ const HOLD_BLOCKS_COL = 4;
 const HOLD_BLOCKS_ROW = 4;
 const HOLD_FIELD_WIDTH = HOLD_BLOCK_SIZE * HOLD_BLOCKS_COL;
 const HOLD_FIELD_HEIGHT = HOLD_BLOCK_SIZE * HOLD_BLOCKS_ROW;
-const hcan = document.getElementById("h-canvas");
-const hcon = hcan.getContext("2d");
-hcan.width = HOLD_FIELD_WIDTH;
-hcan.height = HOLD_FIELD_HEIGHT;
-hcan.style.background = "darkgray";
 
 const BLOCK_SIZE = 20;
 const BLOCKS_COL = 10;
@@ -15,23 +10,27 @@ const BLOCKS_ROW = 20;
 const FIELD_WIDtH = BLOCK_SIZE * BLOCKS_COL;
 const FIELD_HEIGHT = BLOCK_SIZE * BLOCKS_ROW;
 
-const can = document.getElementById("canvas");
-const con = can.getContext("2d");
-can.width = FIELD_WIDtH;
-can.height = FIELD_HEIGHT;
-// can.style.background = "lightgray";
-
 const FUTURE_BLOCK_SIZE = 15;
 const FUTURE_BLOCKS_COL = 4;
 const FUTURE_BLOCKS_ROW = 20;
 const FUTURE_FIELD_WIDTH = FUTURE_BLOCK_SIZE * FUTURE_BLOCKS_COL;
 const FUTURE_FIELD_HEIGHT = FUTURE_BLOCK_SIZE * FUTURE_BLOCKS_ROW;
 
-const fcan = document.getElementById("f-canvas");
-const fcon = fcan.getContext("2d");
-fcan.width = FUTURE_FIELD_WIDTH;
-fcan.height = FUTURE_FIELD_HEIGHT;
-fcan.style.background = "darkgray";
+
+class Canvas {
+    constructor(id, width, height, color) {
+        this.can = document.getElementById(id);
+        this.con = this.can.getContext("2d");
+        this.can.width = width;
+        this.can.height = height;
+        this.can.style.background = color;
+    }
+}
+
+const hcan = new Canvas("h-canvas", HOLD_FIELD_WIDTH, HOLD_FIELD_HEIGHT, "darkgray");
+const can = new Canvas("canvas", FIELD_WIDtH, FIELD_HEIGHT, "darkgray");
+const fcan = new Canvas("f-canvas", FUTURE_FIELD_WIDTH, FUTURE_FIELD_HEIGHT, "darkgray");
+
 
 let holdField = [];
 for (let row = 0; row < HOLD_BLOCKS_ROW; row++) {

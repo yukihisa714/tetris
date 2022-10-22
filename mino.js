@@ -333,7 +333,7 @@ function makeFutureTypes() {
         const num = makeRandom(0, typeNums.length);
         const type = typeNums[num];
         futureTypes.push(type);
-        futureMinos.push(new Mino(0, 0, FUTURE_BLOCK_SIZE, type, true, fcon));
+        futureMinos.push(new Mino(0, 0, FUTURE_BLOCK_SIZE, type, true, fcan.con));
         typeNums.splice(num, 1);
         if (typeNums.length === 0) {
             typeNums = [1, 2, 3, 4, 5, 6, 7];
@@ -343,8 +343,8 @@ function makeFutureTypes() {
 
 function makeMino() {
     let newMino = futureTypes[0];
-    mino = new Mino(3, 0, BLOCK_SIZE, newMino, true, con);
-    predictMino = new Mino(3, 0, BLOCK_SIZE, newMino, false, con);
+    mino = new Mino(3, 0, BLOCK_SIZE, newMino, true, can.con);
+    predictMino = new Mino(3, 0, BLOCK_SIZE, newMino, false, can.con);
 
     futureTypes.shift();
     futureMinos.shift();
@@ -364,11 +364,11 @@ makeMino();
 function makeHoldMino() {
     const tmpMino = mino;
     if (holdMino) {
-        mino = new Mino(3, 0, BLOCK_SIZE, holdMino.type, true, con);
+        mino = new Mino(3, 0, BLOCK_SIZE, holdMino.type, true, can.con);
         dropPredictMino();
     }
     else {
         makeMino();
     }
-    holdMino = new Mino(0, 0, HOLD_BLOCK_SIZE, tmpMino.type, true, hcon);
+    holdMino = new Mino(0, 0, HOLD_BLOCK_SIZE, tmpMino.type, true, hcan.con);
 }
