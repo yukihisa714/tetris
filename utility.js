@@ -16,7 +16,6 @@ const FUTURE_BLOCKS_ROW = 20;
 const FUTURE_FIELD_WIDTH = FUTURE_BLOCK_SIZE * FUTURE_BLOCKS_COL;
 const FUTURE_FIELD_HEIGHT = FUTURE_BLOCK_SIZE * FUTURE_BLOCKS_ROW;
 
-
 class Canvas {
     constructor(id, width, height, color) {
         this.can = document.getElementById(id);
@@ -26,26 +25,13 @@ class Canvas {
         this.can.style.background = color;
     }
 }
-
 const hcan = new Canvas("h-canvas", HOLD_FIELD_WIDTH, HOLD_FIELD_HEIGHT, "darkgray");
 const can = new Canvas("canvas", FIELD_WIDtH, FIELD_HEIGHT, "darkgray");
 const fcan = new Canvas("f-canvas", FUTURE_FIELD_WIDTH, FUTURE_FIELD_HEIGHT, "darkgray");
 
-
-let holdField = [];
-for (let row = 0; row < HOLD_BLOCKS_ROW; row++) {
-    holdField[row] = Array(HOLD_BLOCKS_COL).fill(0);
-}
-
-let field = [];
-for (let row = 0; row < BLOCKS_ROW; row++) {
-    field[row] = Array(BLOCKS_COL).fill(0);
-}
-
-let futureField = [];
-for (let row = 0; row < FUTURE_BLOCKS_ROW; row++) {
-    futureField[row] = Array(FUTURE_BLOCKS_COL).fill(0);
-}
+let holdField = make2dArray(HOLD_BLOCKS_COL, HOLD_BLOCKS_ROW);
+let field = make2dArray(BLOCKS_COL, BLOCKS_ROW);
+let futureField = make2dArray(FUTURE_BLOCKS_COL, FUTURE_BLOCKS_ROW);
 
 /**
  * 
@@ -54,4 +40,12 @@ for (let row = 0; row < FUTURE_BLOCKS_ROW; row++) {
  */
 function makeRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function make2dArray(col, row) {
+    let array = [];
+    for (let Row = 0; Row < row; Row++) {
+        array[Row] = Array(col).fill(0);
+    }
+    return array;
 }
