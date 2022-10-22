@@ -354,8 +354,8 @@ function makeMino() {
     }
     dropPredictMino();
 
-    console.log(futureTypes);
-    console.log(newMino);
+    // console.log(futureTypes);
+    // console.log(newMino);
 }
 
 makeFutureTypes();

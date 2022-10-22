@@ -34,7 +34,7 @@ let field = make2dArray(BLOCKS_COL, BLOCKS_ROW);
 let futureField = make2dArray(FUTURE_BLOCKS_COL, FUTURE_BLOCKS_ROW);
 
 /**
- * 
+ * 範囲を指定して整数の乱数を返す関数
  * @param {Number} min 以上
  * @param {Number} max 未満
  */
@@ -42,6 +42,12 @@ function makeRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
+/**
+ * 二次元配列を作る関数
+ * @param {Number} col 横幅
+ * @param {Number} row 縦幅
+ * @returns 
+ */
 function make2dArray(col, row) {
     let array = [];
     for (let Row = 0; Row < row; Row++) {
