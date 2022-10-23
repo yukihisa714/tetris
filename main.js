@@ -52,14 +52,6 @@ function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
     ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
 }
 
-// function drawAllHoldBlocks() {
-//     for (let y = 0; y < HOLD_BLOCKS_ROW; y++) {
-//         for (let x = 0; x < HOLD_BLOCKS_COL; x++) {
-//             drawOneBlock(x, y, HOLD_BLOCK_SIZE, colors[holdField[y][x]], "dimgray",hcan.con);
-//         }
-//     }
-// }
-
 function drawAllBlocks() {
     for (let y = 0; y < BLOCKS_ROW; y++) {
         for (let x = 0; x < BLOCKS_COL; x++) {
@@ -67,14 +59,6 @@ function drawAllBlocks() {
         }
     }
 }
-
-// function drawAllFutureBlocks() {
-//     for (let y = 0; y < FUTURE_BLOCKS_ROW; y++) {
-//         for (let x = 0; x < FUTURE_BLOCKS_COL; x++) {
-//             drawOneBlock(x, y, FUTURE_BLOCK_SIZE, colors[futureField[y][x]], "dimgray",fcan.con);
-//         }
-//     }
-// }
 
 function mainLoop() {
     frame++;
@@ -87,14 +71,12 @@ function mainLoop() {
         removeLine();
     }
 
-
     mino.update();
 
     hcan.con.clearRect(0, 0, HOLD_FIELD_WIDTH, HOLD_FIELD_HEIGHT);
     can.con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
     fcan.con.clearRect(0, 0, FUTURE_FIELD_WIDTH, FUTURE_FIELD_HEIGHT);
     drawAllBlocks();
-    // drawAllFutureBlocks();
     for (const fMino of futureMinos) {
         fMino.draw();
     }
