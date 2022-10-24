@@ -12,6 +12,7 @@ document.onkeydown = (e) => {
             break;
         case "Shift":
             makeHoldMino();
+            drawHold();
             break;
 
         default:
@@ -45,21 +46,6 @@ function removeLine() {
     }
 }
 
-function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
-    ctx.fillStyle = fillColor;
-    ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
-    ctx.strokeStyle = strokeColor;
-    ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
-}
-
-function drawAllBlocks() {
-    for (let y = 0; y < BLOCKS_ROW; y++) {
-        for (let x = 0; x < BLOCKS_COL; x++) {
-            drawOneBlock(x, y, BLOCK_SIZE, colors[field[y][x]], "dimgray", can.con);
-        }
-    }
-}
-
 function mainLoop() {
     frame++;
     if (!mino.check(0, 0, 0)) {
@@ -72,19 +58,6 @@ function mainLoop() {
     }
 
     mino.update();
-
-    hcan.con.clearRect(0, 0, HOLD_FIELD_WIDTH, HOLD_FIELD_HEIGHT);
-    can.con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
-    fcan.con.clearRect(0, 0, FUTURE_FIELD_WIDTH, FUTURE_FIELD_HEIGHT);
-    drawAllBlocks();
-    for (const fMino of futureMinos) {
-        fMino.draw();
-    }
-    if (holdMino) {
-        holdMino.draw();
-    }
-    predictMino.draw();
-    mino.draw();
 
 }
 

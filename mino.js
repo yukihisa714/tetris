@@ -264,6 +264,7 @@ class Mino {
             removeLine();
             makeMino();
         }
+        drawAll();
     }
     draw() {
         for (let y = 0; y < 4; y++) {
@@ -349,6 +350,7 @@ function makeMino() {
     for (const fMino of futureMinos) {
         fMino.y = futureMinos.indexOf(fMino) * 4;
     }
+    drawFuture();
     dropPredictMino();
 }
 
@@ -365,4 +367,38 @@ function makeHoldMino() {
         makeMino();
     }
     holdMino = new Mino(0, 0, HOLD_BLOCK_SIZE, tmpMino.type, true, hcan.con);
+}
+
+function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
+    ctx.fillStyle = fillColor;
+    ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
+    ctx.strokeStyle = strokeColor;
+    ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
+}
+
+function drawAllBlocks() {
+    for (let y = 0; y < BLOCKS_ROW; y++) {
+        for (let x = 0; x < BLOCKS_COL; x++) {
+            drawOneBlock(x, y, BLOCK_SIZE, colors[field[y][x]], "dimgray", can.con);
+        }
+    }
+}
+
+function drawHold() {
+    hcan.con.clearRect(0, 0, HOLD_FIELD_WIDTH, HOLD_FIELD_HEIGHT);
+    holdMino.draw();
+}
+
+function drawFuture() {
+    fcan.con.clearRect(0, 0, FUTURE_FIELD_WIDTH, FUTURE_FIELD_HEIGHT);
+    for (const fMino of futureMinos) {
+        fMino.draw();
+    }
+}
+
+function drawAll() {
+    can.con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
+    drawAllBlocks();
+    predictMino.draw();
+    mino.draw();
 }
