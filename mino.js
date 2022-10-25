@@ -1,4 +1,4 @@
-const colors = ["darkgray", "skyblue", "yellow", "green", "red", "blue", "orange", "pink"];
+const COLORS = ["darkgray", "skyblue", "yellow", "green", "red", "blue", "orange", "pink"];
 
 const MINO_SHAPE = [
     // none
@@ -196,7 +196,7 @@ class Mino {
         this.reality = reality;
         this.ctx = ctx;
 
-        this.fillColor = reality ? colors[this.type] : "silver";
+        this.fillColor = reality ? COLORS[this.type] : "silver";
         this.strokeColor = reality ? "black" : "lightgray";
 
         this.keyCount = {
@@ -219,19 +219,18 @@ class Mino {
             }
         }
     }
-    // ミノが動く先に障害物があるかどうか判断する
     /**
-     * 
+     * ミノが動く先に障害物があるかどうか判断するメソッド
      * @param {Number} mvoeX 左右移動
      * @param {Number} moveY 上下移動
      * @param {Number} rotate 右回転
      * @returns True or False 移動が出来るかどうか
      */
-    check(mvoeX, moveY, rotate) {
+    check(moveX, moveY, rotate) {
         for (let y = 0; y < 4; y++) {
             for (let x = 0; x < 4; x++) {
                 if (MINO_SHAPE[this.type][(this.rotate + rotate + 4) % 4][y][x]) {
-                    const newX = this.x + mvoeX + x;
+                    const newX = this.x + moveX + x;
                     const newY = this.y + moveY + y;
                     if (newX < 0 || BLOCKS_COL <= newX) return false;
                     if (newY < 0 || BLOCKS_ROW <= newY) return false;
@@ -241,9 +240,8 @@ class Mino {
         }
         return true;
     }
-    // ミノを動かす
     /**
-     * 
+     * ミノを動かすメソッド
      * @param {Number} mvoeX 左右移動
      * @param {Number} moveY 上下移動
      * @param {Number} rotate 右回転
@@ -288,7 +286,7 @@ class Mino {
         }
     }
     /**
-     * 
+     * キーをカウントするメソッド
      * @param {String} key 例) "ArrowUp"
      * @param {Number} often 
      * @param {Number} x x変異
@@ -390,7 +388,7 @@ function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
 function drawAllBlocks() {
     for (let y = 0; y < BLOCKS_ROW; y++) {
         for (let x = 0; x < BLOCKS_COL; x++) {
-            drawOneBlock(x, y, BLOCK_SIZE, colors[field[y][x]], "dimgray", can.con);
+            drawOneBlock(x, y, BLOCK_SIZE, COLORS[field[y][x]], "dimgray", can.con);
         }
     }
 }
