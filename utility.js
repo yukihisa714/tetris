@@ -24,6 +24,9 @@ class Canvas {
         this.can.height = height;
         this.can.style.background = color;
     }
+    clear() {
+        this.con.clearRect(0, 0, this.can.width, this.can.height);
+    }
 }
 const hcan = new Canvas("h-canvas", HOLD_FIELD_WIDTH, HOLD_FIELD_HEIGHT, "darkgray");
 const can = new Canvas("canvas", FIELD_WIDtH, FIELD_HEIGHT, "darkgray");

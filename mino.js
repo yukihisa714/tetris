@@ -173,7 +173,17 @@ const MINO_SHAPE = [
     ],
 ];
 
+
 class Mino {
+    /**
+     * 
+     * @param {Number} x 出現位置
+     * @param {Number} y 出現位置
+     * @param {Number} blockSize ブロック一つのサイズ
+     * @param {Number} type 1~7までの整数
+     * @param {Boolean} reality 実体があるかどうか
+     * @param {Object} ctx 描画するCanvasクラスのctx
+     */
     constructor(x, y, blockSize, type, reality, ctx) {
         this.x = x;
         this.y = y;
@@ -215,7 +225,7 @@ class Mino {
      * @param {Number} mvoeX 左右移動
      * @param {Number} moveY 上下移動
      * @param {Number} rotate 右回転
-     * @returns True or False
+     * @returns True or False 移動が出来るかどうか
      */
     check(mvoeX, moveY, rotate) {
         for (let y = 0; y < 4; y++) {
@@ -247,6 +257,7 @@ class Mino {
             if (this.reality) {
                 dropPredictMino();
             }
+            drawMain();
             return true;
         }
         else {
@@ -265,7 +276,6 @@ class Mino {
             removeLine();
             makeMino();
         }
-        drawAll();
     }
     draw() {
         for (let y = 0; y < 4; y++) {
@@ -386,19 +396,19 @@ function drawAllBlocks() {
 }
 
 function drawHold() {
-    hcan.con.clearRect(0, 0, HOLD_FIELD_WIDTH, HOLD_FIELD_HEIGHT);
+    hcan.clear();
     holdMino.draw();
 }
 
 function drawFuture() {
-    fcan.con.clearRect(0, 0, FUTURE_FIELD_WIDTH, FUTURE_FIELD_HEIGHT);
+    fcan.clear();
     for (const fMino of futureMinos) {
         fMino.draw();
     }
 }
 
-function drawAll() {
-    can.con.clearRect(0, 0, FIELD_WIDtH, FIELD_HEIGHT);
+function drawMain() {
+    can.clear();
     drawAllBlocks();
     predictMino.draw();
     mino.draw();
