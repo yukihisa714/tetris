@@ -221,9 +221,11 @@ class Mino {
         for (let y = 0; y < 4; y++) {
             for (let x = 0; x < 4; x++) {
                 if (MINO_SHAPE[this.type][(this.rotate + rotate + 4) % 4][y][x]) {
-                    if (this.x + mvoeX + x < 0 || BLOCKS_COL <= this.x + mvoeX + x) return false;
-                    if (this.y + moveY + y < 0 || BLOCKS_ROW <= this.y + moveY + y) return false;
-                    if (field[this.y + moveY + y][this.x + mvoeX + x]) return false;
+                    const newX = this.x + mvoeX + x;
+                    const newY = this.y + moveY + y;
+                    if (newX < 0 || BLOCKS_COL <= newX) return false;
+                    if (newY < 0 || BLOCKS_ROW <= newY) return false;
+                    if (field[newY][newX]) return false;
                 }
             }
         }
@@ -241,8 +243,7 @@ class Mino {
         if (this.check(mvoeX, moveY, rotate)) {
             this.x += mvoeX;
             this.y += moveY;
-            this.rotate += rotate;
-            this.rotate = (this.rotate + 4) % 4;
+            this.rotate = (this.rotate + rotate + 4) % 4;
             if (this.reality) {
                 dropPredictMino();
             }
