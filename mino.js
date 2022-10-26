@@ -176,7 +176,7 @@ const MINO_SHAPE = [
 
 class Mino {
     /**
-     * 
+     * テトリミノクラス
      * @param {Number} x 出現位置
      * @param {Number} y 出現位置
      * @param {Number} blockSize ブロック一つのサイズ

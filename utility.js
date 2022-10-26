@@ -36,6 +36,37 @@ let holdField = make2dArray(HOLD_BLOCKS_COL, HOLD_BLOCKS_ROW);
 let field = make2dArray(BLOCKS_COL, BLOCKS_ROW);
 let futureField = make2dArray(FUTURE_BLOCKS_COL, FUTURE_BLOCKS_ROW);
 
+class Field {
+    /**
+     * フィールドクラス
+     * @param {Number} blockSize ブロック一つのサイズ
+     * @param {Number} col 横
+     * @param {Number} row 縦
+     * @param {String} canvasId キャンバスのID
+     * @param {String} color キャンバスの色
+     */
+    constructor(blockSize, col, row, canvasId, color) {
+        this.blockSize = blockSize;
+        this.blocksCol = col;
+        this.blocksRow = row;
+        this.width = this.blockSize * this.blocksCol;
+        this.height = this.blockSize * this.blocksRow;
+
+        this.canvas = new Canvas(canvasId, this.width, this.height, color);
+        this.array = make2dArray(this.blocksCol, this.blocksRow);
+    }
+}
+
+const hold = new Field(15, 4, 4, "h-canvas", "darkgray");
+const main = new Field(20, 10, 20, "canvas", "darkgray");
+const future = new Field(15, 4, 20, "f-canvas", "darkgray");
+
+const FIELDS = {
+    hold: new Field(15, 4, 4, "h-canvas", "darkgray"),
+    main: new Field(20, 10, 20, "canvas", "darkgray"),
+    future: new Field(15, 4, 20, "f-canvas", "darkgray"),
+};
+
 /**
  * 範囲を指定して整数の乱数を返す関数
  * @param {Number} min 以上
