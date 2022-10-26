@@ -332,7 +332,6 @@ let holdMino;
 
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
 let futureMinos = [];
-let aaa = [];
 
 function makeFutureTypes() {
     while (futureMinos.length < FIELDS.future.blocksRow / 4) {
