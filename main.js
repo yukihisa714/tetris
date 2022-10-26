@@ -32,16 +32,16 @@ const GAME_STATES = {
 let nowGameState = GAME_STATES.beforeGame;
 
 function removeLine() {
-    for (let y = BLOCKS_ROW - 1; y >= 0; y--) {
+    for (let y = FIELDS.main.blocksRow - 1; y >= 0; y--) {
         let p = 1;
-        for (const x of field[y]) {
+        for (const x of FIELDS.main.array[y]) {
             p *= x;
         }
         if (!p) continue;
         for (let py = y; py >= 1; py--) {
-            field[py] = field[py - 1];
+            FIELDS.main.array[py] = FIELDS.main.array[py - 1];
         }
-        field[0] = Array(10).fill(0);
+        FIELDS.main.array[0] = Array(10).fill(0);
         y++;
     }
 }

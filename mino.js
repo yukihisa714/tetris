@@ -214,7 +214,7 @@ class Mino {
             for (let x = 0; x < 4; x++) {
                 const p = MINO_SHAPE[this.type][this.rotate][y][x];
                 if (p) {
-                    field[this.y + y][this.x + x] = p;
+                    FIELDS.main.array[this.y + y][this.x + x] = p;
                 }
             }
         }
@@ -232,9 +232,9 @@ class Mino {
                 if (MINO_SHAPE[this.type][(this.rotate + rotate + 4) % 4][y][x]) {
                     const newX = this.x + moveX + x;
                     const newY = this.y + moveY + y;
-                    if (newX < 0 || BLOCKS_COL <= newX) return false;
-                    if (newY < 0 || BLOCKS_ROW <= newY) return false;
-                    if (field[newY][newX]) return false;
+                    if (newX < 0 || FIELDS.main.blocksCol <= newX) return false;
+                    if (newY < 0 || FIELDS.main.blocksRow <= newY) return false;
+                    if (FIELDS.main.array[newY][newX]) return false;
                 }
             }
         }
@@ -264,11 +264,7 @@ class Mino {
     }
     // ミノを下まで一気に落とす
     dropMino() {
-        while (true) {
-            if (!this.moveMino(0, 1, 0)) {
-                break;
-            }
-        }
+        while (this.moveMino(0, 1, 0)) { }
         if (this.reality) {
             this.setMino();
             removeLine();
@@ -336,14 +332,15 @@ let holdMino;
 
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
 let futureMinos = [];
+let aaa = [];
 
 function makeFutureTypes() {
-    while (futureMinos.length < FUTURE_BLOCKS_ROW / 4) {
+    while (futureMinos.length < FIELDS.future.blocksRow / 4) {
         const num = makeRandom(0, typeNums.length);
         const type = typeNums[num];
-        futureMinos.push(new Mino(0, 0, FUTURE_BLOCK_SIZE, type, true, fcan.con));
+        futureMinos.push(new Mino(0, 0, FIELDS.future.blockSize, type, true, FIELDS.future.canvas.con));
         typeNums.splice(num, 1);
-        if (typeNums.length === 0) {
+        if (!typeNums.length) {
             typeNums = [1, 2, 3, 4, 5, 6, 7];
         }
     }
@@ -351,8 +348,8 @@ function makeFutureTypes() {
 
 function makeMino() {
     let newType = futureMinos[0].type;
-    mino = new Mino(3, 0, BLOCK_SIZE, newType, true, can.con);
-    predictMino = new Mino(3, 0, BLOCK_SIZE, newType, false, can.con);
+    mino = new Mino(3, 0, FIELDS.main.blockSize, newType, true, FIELDS.main.canvas.con);
+    predictMino = new Mino(3, 0, FIELDS.main.blockSize, newType, false, FIELDS.main.canvas.con);
 
     futureMinos.shift();
     makeFutureTypes();
@@ -369,13 +366,13 @@ makeMino();
 function makeHoldMino() {
     const tmpMino = mino;
     if (holdMino) {
-        mino = new Mino(3, 0, BLOCK_SIZE, holdMino.type, true, can.con);
+        mino = new Mino(3, 0, FIELDS.main.blockSize, holdMino.type, true, FIELDS.main.canvas.con);
         dropPredictMino();
     }
     else {
         makeMino();
     }
-    holdMino = new Mino(0, 0, HOLD_BLOCK_SIZE, tmpMino.type, true, hcan.con);
+    holdMino = new Mino(0, 0, FIELDS.hold.blockSize, tmpMino.type, true, FIELDS.hold.canvas.con);
 }
 
 function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
@@ -385,29 +382,29 @@ function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
     ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
 }
 
-function drawAllBlocks() {
-    for (let y = 0; y < BLOCKS_ROW; y++) {
-        for (let x = 0; x < BLOCKS_COL; x++) {
-            drawOneBlock(x, y, BLOCK_SIZE, COLORS[field[y][x]], "dimgray", can.con);
+function drawAllMainBlocks() {
+    for (let y = 0; y < FIELDS.main.blocksRow; y++) {
+        for (let x = 0; x < FIELDS.main.blocksCol; x++) {
+            drawOneBlock(x, y, FIELDS.main.blockSize, COLORS[FIELDS.main.array[y][x]], "dimgray", FIELDS.main.canvas.con);
         }
     }
 }
 
 function drawHold() {
-    hcan.clear();
+    FIELDS.hold.canvas.clear();
     holdMino.draw();
 }
 
 function drawFuture() {
-    fcan.clear();
+    FIELDS.future.canvas.clear();
     for (const fMino of futureMinos) {
         fMino.draw();
     }
 }
 
 function drawMain() {
-    can.clear();
-    drawAllBlocks();
+    FIELDS.main.canvas.clear();
+    drawAllMainBlocks();
     predictMino.draw();
     mino.draw();
 }
