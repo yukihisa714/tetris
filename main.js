@@ -1,7 +1,4 @@
-let frame = 0;
-
 const keyOpe = {};
-
 document.onkeydown = (e) => {
     // console.log(e.key, typeof (e.key));
     keyOpe[e.key] = true;
@@ -45,6 +42,8 @@ function removeLine() {
         y++;
     }
 }
+
+let frame = 0;
 
 function mainLoop() {
     frame++;
