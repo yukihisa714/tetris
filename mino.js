@@ -293,12 +293,17 @@ class Mino {
         this.keyCount[key] = keyOpe[key] ? this.keyCount[key] + 1 : 0;
         if (this.keyCount[key] % often === 1) this.moveMino(x, y, r);
     }
+    // keyControl(key, often, x, y, r) {
+    //     const p = keyOpe[key] >> 0;
+    //     this.keyCount[key] = this.keyCount[key] * p + p;
+    //     if (this.keyCount[key] % often === 1) this.moveMino(x, y, r);
+    // }
     update() {
 
         this.keyControl("ArrowUp", 15, 0, 0, 1);
-        this.keyControl("ArrowDown", 10, 0, 1, 0);
-        this.keyControl("ArrowLeft", 10, -1, 0, 0);
-        this.keyControl("ArrowRight", 10, 1, 0, 0);
+        this.keyControl("ArrowDown", 9, 0, 1, 0);
+        this.keyControl("ArrowLeft", 9, -1, 0, 0);
+        this.keyControl("ArrowRight", 9, 1, 0, 0);
         this.keyControl("z", 15, 0, 0, -1);
         this.keyControl("x", 15, 0, 0, 1);
 
