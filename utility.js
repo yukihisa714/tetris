@@ -1,4 +1,11 @@
 class Canvas {
+    /**
+     * キャンバスクラス
+     * @param {String} id canvasId
+     * @param {Number} width 横幅(px)
+     * @param {Number} height 縦幅(px)
+     * @param {String} color backgroundcolor
+     */
     constructor(id, width, height, color) {
         this.can = document.getElementById(id);
         this.con = this.can.getContext("2d");

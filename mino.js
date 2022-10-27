@@ -177,8 +177,8 @@ const MINO_SHAPE = [
 class Mino {
     /**
      * テトリミノクラス
-     * @param {Number} x 出現位置
-     * @param {Number} y 出現位置
+     * @param {Number} x 出現位置(ブロック単位)
+     * @param {Number} y 出現位置(ブロック単位)
      * @param {Number} blockSize ブロック一つのサイズ
      * @param {Number} type 1~7までの整数
      * @param {Boolean} reality 実体があるかどうか
