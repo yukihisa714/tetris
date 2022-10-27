@@ -173,7 +173,6 @@ const MINO_SHAPE = [
     ],
 ];
 
-
 class Mino {
     /**
      * テトリミノクラス
