@@ -18,6 +18,30 @@ class Canvas {
     }
 }
 
+class Table {
+    constructor(id, col, row, color) {
+        this.id = id;
+        this.col = col;
+        this.row = row;
+        this.color = color;
+
+        this.tableElm = document.getElementById(this.id);
+        this.array = [];
+        for (let row = 0; row < this.row; row++) {
+            const tr = document.createElement("tr");
+            this.tableElm.appendChild(tr);
+            this.array[row] = [];
+            for (let col = 0; col < this.col; col++) {
+                const td = document.createElement("td");
+                td.style.background = this.color;
+                tr.appendChild(td);
+                this.array[row][col] = { num: 0, elm: td };
+            }
+        }
+    }
+}
+
+// let testTable = new Table("main-table", 10, 20);
 class Field {
     /**
      * フィールドクラス
@@ -27,7 +51,7 @@ class Field {
      * @param {String} canvasId キャンバスのID
      * @param {String} color キャンバスの色
      */
-    constructor(blockSize, col, row, canvasId, canvasColor) {
+    constructor(blockSize, col, row, canvasId, canvasColor, tableId, tableColor) {
         this.blockSize = blockSize;
         this.blocksCol = col;
         this.blocksRow = row;
@@ -38,13 +62,23 @@ class Field {
         this.canvasColor = canvasColor;
         this.canvas = new Canvas(this.canvasId, this.width, this.height, this.canvasColor);
         this.array = make2dArray(this.blocksCol, this.blocksRow);
+        this.tableId = tableId;
+        this.tableColor = tableColor;
+        this.table = new Table(this.tableId, this.blocksCol, this.blocksRow, this.tableColor);
+    }
+    draw() {
+        for (let row = 0; row < this.blocksRow; row++) {
+            for (let col = 0; col < this.blocksCol; col++) {
+                this.table.array[row][col].elm.style.background = COLORS[this.array[row][col]];
+            }
+        }
     }
 }
 
 const FIELDS = {
-    hold: new Field(15, 4, 4, "h-canvas", "darkgray"),
-    main: new Field(20, 10, 20, "canvas", "darkgray"),
-    future: new Field(15, 4, 20, "f-canvas", "darkgray"),
+    hold: new Field(15, 4, 4, "h-canvas", "darkgray", "hold-table", "darkgray"),
+    main: new Field(20, 10, 20, "canvas", "darkgray", "main-table", "darkgray"),
+    future: new Field(15, 4, 20, "f-canvas", "darkgray", "future-table", "darkgray"),
 };
 
 /**
