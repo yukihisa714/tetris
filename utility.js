@@ -39,9 +39,16 @@ class Table {
             }
         }
     }
+    reflectColor() {
+        for (let row = 0; row < this.row; row++) {
+            for (let col = 0; col < this.col; col++) {
+                const p = this.array[row][col]
+                p.elm.style.background = COLORS[p.num];
+            }
+        }
+    }
 }
 
-// let testTable = new Table("main-table", 10, 20);
 class Field {
     /**
      * フィールドクラス
@@ -65,6 +72,8 @@ class Field {
         this.tableId = tableId;
         this.tableColor = tableColor;
         this.table = new Table(this.tableId, this.blocksCol, this.blocksRow, this.tableColor);
+
+        this.minos = [];
     }
     draw() {
         for (let row = 0; row < this.blocksRow; row++) {

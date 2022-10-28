@@ -181,9 +181,9 @@ class Mino {
      * @param {Number} blockSize ブロック一つのサイズ
      * @param {Number} type 1~7までの整数
      * @param {Boolean} reality 実体があるかどうか
-     * @param {Object} ctx 描画するCanvasクラスのctx
+     * @param {Object} field 描画するフィールド
      */
-    constructor(x, y, blockSize, type, reality, ctx) {
+    constructor(x, y, blockSize, type, reality, field) {
         this.x = x;
         this.y = y;
         this.blockSize = blockSize;
@@ -193,7 +193,8 @@ class Mino {
         this.strength = this.maxStrength;
         this.deathStart = false;
         this.reality = reality;
-        this.ctx = ctx;
+        this.field = field;
+        this.ctx = this.field.canvas.con;
 
         this.fillColor = reality ? COLORS[this.type] : "silver";
         this.strokeColor = reality ? "black" : "lightgray";
@@ -213,6 +214,7 @@ class Mino {
             for (let x = 0; x < 4; x++) {
                 const p = MINO_SHAPE[this.type][this.rotate][y][x];
                 if (p) {
+                    // this.field.table.array[this.y + y][this.x + x].num = p;
                     FIELDS.main.array[this.y + y][this.x + x] = p;
                 }
             }
@@ -233,6 +235,7 @@ class Mino {
                     const newY = this.y + moveY + y;
                     if (newX < 0 || FIELDS.main.blocksCol <= newX) return false;
                     if (newY < 0 || FIELDS.main.blocksRow <= newY) return false;
+                    // if (this.field.table.array[newY][newX].num) return false;
                     if (FIELDS.main.array[newY][newX]) return false;
                 }
             }
@@ -255,6 +258,7 @@ class Mino {
                 dropPredictMino();
             }
             drawMain();
+            this.field.table.reflectColor();
             return true;
         }
         else {
@@ -276,6 +280,7 @@ class Mino {
                 const p = MINO_SHAPE[this.type][this.rotate][y][x];
                 if (p) {
                     drawOneBlock(this.x + x, this.y + y, this.blockSize, this.fillColor, this.strokeColor, this.ctx);
+                    // this.field.table.array[this.y + y][this.x + x].elm.style.background = this.fillColor;
                 }
             }
         }
@@ -323,25 +328,25 @@ class Mino {
 }
 
 function dropPredictMino() {
-    predictMino.x = mino.x;
-    predictMino.y = mino.y;
-    predictMino.rotate = mino.rotate;
-    predictMino.type = mino.type;
-    predictMino.dropMino();
+    FIELDS.main.minos[1].x = FIELDS.main.minos[0].x;
+    FIELDS.main.minos[1].y = FIELDS.main.minos[0].y;
+    FIELDS.main.minos[1].rotate = FIELDS.main.minos[0].rotate;
+    FIELDS.main.minos[1].type = FIELDS.main.minos[0].type;
+    FIELDS.main.minos[1].dropMino();
 }
 
 let mino;
-let predictMino;
-let holdMino;
+// let FIELDS.main.minos[1];
+// let FIELDS.hold.minos[0];
 
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
-let futureMinos = [];
+// let FIELDS.future.minos = [];
 
 function makeFutureTypes() {
-    while (futureMinos.length < FIELDS.future.blocksRow / 4) {
+    while (FIELDS.future.minos.length < FIELDS.future.blocksRow / 4) {
         const num = makeRandom(0, typeNums.length);
         const type = typeNums[num];
-        futureMinos.push(new Mino(0, 0, FIELDS.future.blockSize, type, true, FIELDS.future.canvas.con));
+        FIELDS.future.minos.push(new Mino(0, 0, FIELDS.future.blockSize, type, true, FIELDS.future));
         typeNums.splice(num, 1);
         if (!typeNums.length) {
             typeNums = [1, 2, 3, 4, 5, 6, 7];
@@ -350,14 +355,14 @@ function makeFutureTypes() {
 }
 
 function makeMino() {
-    let newType = futureMinos[0].type;
-    mino = new Mino(3, 0, FIELDS.main.blockSize, newType, true, FIELDS.main.canvas.con);
-    predictMino = new Mino(3, 0, FIELDS.main.blockSize, newType, false, FIELDS.main.canvas.con);
+    let newType = FIELDS.future.minos[0].type;
+    FIELDS.main.minos[0] = new Mino(3, 0, FIELDS.main.blockSize, newType, true, FIELDS.main);
+    FIELDS.main.minos[1] = new Mino(3, 0, FIELDS.main.blockSize, newType, false, FIELDS.main);
 
-    futureMinos.shift();
+    FIELDS.future.minos.shift();
     makeFutureTypes();
-    for (const fMino of futureMinos) {
-        fMino.y = futureMinos.indexOf(fMino) * 4;
+    for (const fMino of FIELDS.future.minos) {
+        fMino.y = FIELDS.future.minos.indexOf(fMino) * 4;
     }
     drawFuture();
     dropPredictMino();
@@ -367,15 +372,16 @@ makeFutureTypes();
 makeMino();
 
 function makeHoldMino() {
-    const tmpMino = mino;
-    if (holdMino) {
-        mino = new Mino(3, 0, FIELDS.main.blockSize, holdMino.type, true, FIELDS.main.canvas.con);
+    const tmpMino = FIELDS.main.minos[0];
+    if (FIELDS.hold.minos[0]) {
+        FIELDS.main.minos[0] = new Mino(3, 0, FIELDS.main.blockSize, FIELDS.hold.minos[0].type, true, FIELDS.main);
         dropPredictMino();
     }
     else {
         makeMino();
     }
-    holdMino = new Mino(0, 0, FIELDS.hold.blockSize, tmpMino.type, true, FIELDS.hold.canvas.con);
+    FIELDS.hold.minos[0] = new Mino(0, 0, FIELDS.hold.blockSize, tmpMino.type, true, FIELDS.hold);
+    FIELDS.hold.table.reflectColor();
 }
 
 function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
@@ -388,6 +394,7 @@ function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
 function drawAllMainBlocks() {
     for (let y = 0; y < FIELDS.main.blocksRow; y++) {
         for (let x = 0; x < FIELDS.main.blocksCol; x++) {
+            // drawOneBlock(x, y, FIELDS.main.blockSize, COLORS[FIELDS.main.table.array[y][x].num], "dimgray", FIELDS.main.canvas.con);
             drawOneBlock(x, y, FIELDS.main.blockSize, COLORS[FIELDS.main.array[y][x]], "dimgray", FIELDS.main.canvas.con);
         }
     }
@@ -395,12 +402,12 @@ function drawAllMainBlocks() {
 
 function drawHold() {
     FIELDS.hold.canvas.clear();
-    holdMino.draw();
+    FIELDS.hold.minos[0].draw();
 }
 
 function drawFuture() {
     FIELDS.future.canvas.clear();
-    for (const fMino of futureMinos) {
+    for (const fMino of FIELDS.future.minos) {
         fMino.draw();
     }
 }
@@ -408,6 +415,6 @@ function drawFuture() {
 function drawMain() {
     FIELDS.main.canvas.clear();
     drawAllMainBlocks();
-    predictMino.draw();
-    mino.draw();
+    FIELDS.main.minos[1].draw();
+    FIELDS.main.minos[0].draw();
 }
