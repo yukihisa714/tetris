@@ -194,7 +194,6 @@ class Mino {
         this.strength = this.maxStrength;
         this.deathStart = false;
         this.reality = reality;
-        // this.ctx = ctx;
 
         this.fillColor = reality ? COLORS[this.type] : "silver";
         this.strokeColor = reality ? "black" : "lightgray";
