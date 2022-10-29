@@ -255,7 +255,7 @@ class Mino {
             if (this.reality) {
                 dropPredictMino();
             }
-            drawMain();
+            FIELDS.main.draw();
             return true;
         }
         else {
@@ -271,16 +271,6 @@ class Mino {
             makeMino();
         }
     }
-    // draw() {
-    //     for (let y = 0; y < 4; y++) {
-    //         for (let x = 0; x < 4; x++) {
-    //             const p = MINO_SHAPE[this.type][this.rotate][y][x];
-    //             if (p) {
-    //                 drawOneBlock(this.x + x, this.y + y, this.blockSize, this.fillColor, this.strokeColor, this.ctx);
-    //             }
-    //         }
-    //     }
-    // }
     /**
      * キーをカウントするメソッド
      * @param {String} key 例) "ArrowUp"
@@ -331,12 +321,7 @@ function dropPredictMino() {
     FIELDS.main.minos[0].dropMino();
 }
 
-// let mino;
-// let predictMino;
-// let holdMino;
-
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
-// let futureMinos = [];
 
 function makeFutureTypes() {
     while (FIELDS.future.minos.length < FIELDS.future.blocksRow / 4) {
@@ -360,7 +345,7 @@ function makeMino() {
     for (const fMino of FIELDS.future.minos) {
         fMino.y = FIELDS.future.minos.indexOf(fMino) * 4;
     }
-    drawFuture();
+    FIELDS.future.draw();
     dropPredictMino();
 }
 
@@ -378,21 +363,6 @@ function makeHoldMino() {
     }
     FIELDS.hold.minos[0] = new Mino(0, 0, FIELDS.hold.blockSize, tmpMino.type, true);
 }
-
-// function drawOneBlock(x, y, blockSize, fillColor, strokeColor, ctx) {
-//     ctx.fillStyle = fillColor;
-//     ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
-//     ctx.strokeStyle = strokeColor;
-//     ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
-// }
-
-// function drawAllMainBlocks() {
-//     for (let y = 0; y < FIELDS.main.blocksRow; y++) {
-//         for (let x = 0; x < FIELDS.main.blocksCol; x++) {
-//             drawOneBlock(x, y, FIELDS.main.blockSize, COLORS[FIELDS.main.array[y][x]], "dimgray", FIELDS.main.canvas.con);
-//         }
-//     }
-// }
 
 function fusionArrays(field) {
     for (let row = 0; row < field.blocksRow; row++) {
@@ -416,27 +386,4 @@ function fusionArrays(field) {
             }
         }
     }
-}
-
-
-function drawHold() {
-    // FIELDS.hold.canvas.clear();
-    // FIELDS.hold.minos[0].draw();
-    FIELDS.hold.draw();
-}
-
-function drawFuture() {
-    // FIELDS.future.canvas.clear();
-    // for (const fMino of FIELDS.future.minos) {
-    //     fMino.draw();
-    // }
-    FIELDS.future.draw();
-}
-
-function drawMain() {
-    // FIELDS.main.canvas.clear();
-    // drawAllMainBlocks();
-    // FIELDS.main.minos[0].draw();
-    // FIELDS.main.minos[1].draw();
-    FIELDS.main.draw();
 }

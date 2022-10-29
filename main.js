@@ -9,7 +9,7 @@ document.onkeydown = (e) => {
             break;
         case "Shift":
             makeHoldMino();
-            drawHold();
+            FIELDS.hold.draw();
             break;
 
         default:

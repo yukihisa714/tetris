@@ -1,23 +1,3 @@
-// class Canvas {
-//     /**
-//      * キャンバスクラス
-//      * @param {String} id canvasId
-//      * @param {Number} width 横幅(px)
-//      * @param {Number} height 縦幅(px)
-//      * @param {String} color backgroundcolor
-//      */
-//     constructor(id, width, height, color) {
-//         this.can = document.getElementById(id);
-//         this.con = this.can.getContext("2d");
-//         this.can.width = width;
-//         this.can.height = height;
-//         this.can.style.background = color;
-//     }
-//     clear() {
-//         this.con.clearRect(0, 0, this.can.width, this.can.height);
-//     }
-// }
-
 class Table {
     constructor(id, tdId, col, row, color) {
         this.id = id;
@@ -66,9 +46,6 @@ class Field {
         this.width = this.blockSize * this.blocksCol;
         this.height = this.blockSize * this.blocksRow;
 
-        // this.canvasId = canvasId;
-        // this.canvasColor = canvasColor;
-        // this.canvas = new Canvas(this.canvasId, this.width, this.height, this.canvasColor);
         this.array = make2dArray(this.blocksCol, this.blocksRow);
         this.tableId = tableId;
         this.tableColor = tableColor;
