@@ -312,11 +312,13 @@ class Mino {
 }
 
 function dropPredictMino() {
-    FIELDS.main.minos[0].x = FIELDS.main.minos[1].x;
-    FIELDS.main.minos[0].y = FIELDS.main.minos[1].y;
-    FIELDS.main.minos[0].rotate = FIELDS.main.minos[1].rotate;
-    FIELDS.main.minos[0].type = FIELDS.main.minos[1].type;
-    FIELDS.main.minos[0].dropMino();
+    const normalMino = FIELDS.main.minos[1];
+    const predictMino = FIELDS.main.minos[0];
+    predictMino.x = normalMino.x;
+    predictMino.y = normalMino.y;
+    predictMino.rotate = normalMino.rotate;
+    predictMino.type = normalMino.type;
+    predictMino.dropMino();
 }
 
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
