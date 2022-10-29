@@ -19,8 +19,9 @@ class Canvas {
 }
 
 class Table {
-    constructor(id, col, row, color) {
+    constructor(id, tdId, col, row, color) {
         this.id = id;
+        this.tdId = tdId;
         this.col = col;
         this.row = row;
         this.color = color;
@@ -34,6 +35,7 @@ class Table {
             for (let col = 0; col < this.col; col++) {
                 const td = document.createElement("td");
                 td.style.background = this.color;
+                td.classList.add(this.tdId);
                 tr.appendChild(td);
                 this.array[row][col] = { num: 0, elm: td };
             }
@@ -57,7 +59,7 @@ class Field {
      * @param {String} canvasId キャンバスのID
      * @param {String} color キャンバスの色
      */
-    constructor(blockSize, col, row, canvasId, canvasColor, tableId, tableColor) {
+    constructor(blockSize, col, row, canvasId, canvasColor, tableId, tableColor, tdId) {
         this.blockSize = blockSize;
         this.blocksCol = col;
         this.blocksRow = row;
@@ -70,7 +72,8 @@ class Field {
         this.array = make2dArray(this.blocksCol, this.blocksRow);
         this.tableId = tableId;
         this.tableColor = tableColor;
-        this.table = new Table(this.tableId, this.blocksCol, this.blocksRow, this.tableColor);
+        this.tdId = tdId;
+        this.table = new Table(this.tableId, this.tdId, this.blocksCol, this.blocksRow, this.tableColor);
 
         this.minos = [];
     }
@@ -82,9 +85,9 @@ class Field {
 }
 
 const FIELDS = {
-    hold: new Field(15, 4, 4, "h-canvas", "darkgray", "hold-table", "darkgray"),
-    main: new Field(20, 10, 20, "canvas", "darkgray", "main-table", "darkgray"),
-    future: new Field(15, 4, 20, "f-canvas", "darkgray", "future-table", "darkgray"),
+    hold: new Field(15, 4, 4, "h-canvas", "darkgray", "hold-table", "darkgray", "hold-td"),
+    main: new Field(20, 10, 20, "canvas", "darkgray", "main-table", "darkgray", "main-td"),
+    future: new Field(15, 4, 20, "f-canvas", "darkgray", "future-table", "darkgray", "future-td"),
 };
 
 /**
