@@ -39,11 +39,10 @@ class Table {
             }
         }
     }
-    reflectColor() {
+    clearColor() {
         for (let row = 0; row < this.row; row++) {
             for (let col = 0; col < this.col; col++) {
-                const p = this.array[row][col]
-                p.elm.style.background = COLORS[p.num];
+                this.array[row][col].elm.style.background = this.color;
             }
         }
     }
@@ -76,11 +75,9 @@ class Field {
         this.minos = [];
     }
     draw() {
-        for (let row = 0; row < this.blocksRow; row++) {
-            for (let col = 0; col < this.blocksCol; col++) {
-                this.table.array[row][col].elm.style.background = COLORS[this.array[row][col]];
-            }
-        }
+        this.table.clearColor();
+        fusionArrays(this);
+        // this.table.reflectColor();
     }
 }
 

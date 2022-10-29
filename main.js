@@ -5,7 +5,7 @@ document.onkeydown = (e) => {
 
     switch (e.key) {
         case " ":
-            FIELDS.main.minos[0].dropMino();
+            FIELDS.main.minos[1].dropMino();
             break;
         case "Shift":
             makeHoldMino();
@@ -47,44 +47,23 @@ function removeLine() {
     }
 }
 
-function fusionArrays() {
-    for (const field in FIELDS) {
-        for (let row = 0; row < field.blocksRow; row++) {
-            for (let col = 0; col < field.blocksCol; col++) {
-                field.table.array[row][col] = field.array[row][col];
-            }
-        }
-        if (!field.minos) continue;
-        for (const mino of field.minos) {
-            for (let y = 0; y < 4; y++) {
-                for (let x = 0; x < 4; y++) {
-                    const p = MINO_SHAPE[mino.type][mino.rotate][y][x];
-                    if (p) {
-                        field.table.array[mino.y + y][mino.x + x] = p;
-                    }
-                }
-            }
-        }
-        field.table.reflectColor();
-    }
-}
 
 let frame = 0;
 
 function mainLoop() {
     frame++;
-    if (!FIELDS.main.minos[0].check(0, 0, 0)) {
+    if (!FIELDS.main.minos[1].check(0, 0, 0)) {
         nowGameState = GAME_STATES.afterGame;
     }
 
     if (frame % 60 === 0) {
-        FIELDS.main.minos[0].moveMino(0, 1, 0);
+        FIELDS.main.minos[1].moveMino(0, 1, 0);
         removeLine();
     }
 
-    FIELDS.main.minos[0].update();
+    FIELDS.main.minos[1].update();
 
-    fusionArrays();
+    // fusionArrays();
 }
 
 setInterval(mainLoop, 1000 / 60);
