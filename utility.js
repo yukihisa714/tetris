@@ -1,22 +1,22 @@
-class Canvas {
-    /**
-     * キャンバスクラス
-     * @param {String} id canvasId
-     * @param {Number} width 横幅(px)
-     * @param {Number} height 縦幅(px)
-     * @param {String} color backgroundcolor
-     */
-    constructor(id, width, height, color) {
-        this.can = document.getElementById(id);
-        this.con = this.can.getContext("2d");
-        this.can.width = width;
-        this.can.height = height;
-        this.can.style.background = color;
-    }
-    clear() {
-        this.con.clearRect(0, 0, this.can.width, this.can.height);
-    }
-}
+// class Canvas {
+//     /**
+//      * キャンバスクラス
+//      * @param {String} id canvasId
+//      * @param {Number} width 横幅(px)
+//      * @param {Number} height 縦幅(px)
+//      * @param {String} color backgroundcolor
+//      */
+//     constructor(id, width, height, color) {
+//         this.can = document.getElementById(id);
+//         this.con = this.can.getContext("2d");
+//         this.can.width = width;
+//         this.can.height = height;
+//         this.can.style.background = color;
+//     }
+//     clear() {
+//         this.con.clearRect(0, 0, this.can.width, this.can.height);
+//     }
+// }
 
 class Table {
     constructor(id, tdId, col, row, color) {
@@ -59,16 +59,16 @@ class Field {
      * @param {String} canvasId キャンバスのID
      * @param {String} color キャンバスの色
      */
-    constructor(blockSize, col, row, canvasId, canvasColor, tableId, tableColor, tdId) {
+    constructor(blockSize, col, row, tableId, tableColor, tdId) {
         this.blockSize = blockSize;
         this.blocksCol = col;
         this.blocksRow = row;
         this.width = this.blockSize * this.blocksCol;
         this.height = this.blockSize * this.blocksRow;
 
-        this.canvasId = canvasId;
-        this.canvasColor = canvasColor;
-        this.canvas = new Canvas(this.canvasId, this.width, this.height, this.canvasColor);
+        // this.canvasId = canvasId;
+        // this.canvasColor = canvasColor;
+        // this.canvas = new Canvas(this.canvasId, this.width, this.height, this.canvasColor);
         this.array = make2dArray(this.blocksCol, this.blocksRow);
         this.tableId = tableId;
         this.tableColor = tableColor;
@@ -85,9 +85,9 @@ class Field {
 }
 
 const FIELDS = {
-    hold: new Field(15, 4, 4, "h-canvas", "darkgray", "hold-table", "darkgray", "hold-td"),
-    main: new Field(20, 10, 20, "canvas", "darkgray", "main-table", "darkgray", "main-td"),
-    future: new Field(15, 4, 20, "f-canvas", "darkgray", "future-table", "darkgray", "future-td"),
+    hold: new Field(15, 4, 4, "hold-table", "darkgray", "hold-td"),
+    main: new Field(20, 10, 20, "main-table", "darkgray", "main-td"),
+    future: new Field(15, 4, 20, "future-table", "darkgray", "future-td"),
 };
 
 /**

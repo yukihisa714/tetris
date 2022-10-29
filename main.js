@@ -37,16 +37,11 @@ function removeLine() {
         if (!p) continue;
         for (let py = y; py >= 1; py--) {
             FIELDS.main.array[py] = FIELDS.main.array[py - 1];
-            // FIELDS.main.table.array[py] = FIELDS.main.table.array[py - 1];
         }
         FIELDS.main.array[0] = Array(10).fill(0);
-        // for (const pp of FIELDS.main.table.array[0]) {
-        //     pp.num = 0;
-        // }
         y++;
     }
 }
-
 
 let frame = 0;
 
@@ -62,8 +57,6 @@ function mainLoop() {
     }
 
     FIELDS.main.minos[1].update();
-
-    // fusionArrays();
 }
 
 setInterval(mainLoop, 1000 / 60);
