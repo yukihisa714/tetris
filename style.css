@@ -11,23 +11,29 @@ canvas {
     /* background-color: red; */
 }
 
+/* .section {
+
+} */
+
 .section-display {
     text-align: center;
     font-size: 1.5rem;
 }
 
-/* td {
-    width: 1rem;
-    height: 1rem;
-} */
-
 .table {
+    text-align: center;
     background-color: #888;
+    margin: 0.5rem;
 }
 
 .hold-td {
     width: 0.5rem;
     height: 0.5rem;
+}
+
+#main {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 
 .main-td {

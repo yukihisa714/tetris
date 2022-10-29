@@ -173,7 +173,6 @@ const MINO_SHAPE = [
     ],
 ];
 
-
 class Mino {
     /**
      * テトリミノクラス
@@ -361,28 +360,4 @@ function makeHoldMino() {
         makeMino();
     }
     FIELDS.hold.minos[0] = new Mino(0, 0, FIELDS.hold.blockSize, tmpMino.type, true);
-}
-
-function fusionArrays(field) {
-    for (let row = 0; row < field.blocksRow; row++) {
-        for (let col = 0; col < field.blocksCol; col++) {
-            const p = field.array[row][col];
-            const k = field.table.array[row][col];
-            k.num = p;
-            k.elm.style.background = COLORS[p];
-        }
-    }
-    if (!field.minos) return;
-    for (const mino of field.minos) {
-        for (let y = 0; y < 4; y++) {
-            for (let x = 0; x < 4; x++) {
-                const p = MINO_SHAPE[mino.type][mino.rotate][y][x];
-                if (p) {
-                    const k = field.table.array[mino.y + y][mino.x + x];
-                    k.num = p;
-                    k.elm.style.background = mino.fillColor;
-                }
-            }
-        }
-    }
 }

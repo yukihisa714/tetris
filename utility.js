@@ -56,8 +56,27 @@ class Field {
     }
     draw() {
         this.table.clearColor();
-        fusionArrays(this);
-        // this.table.reflectColor();
+        for (let row = 0; row < this.blocksRow; row++) {
+            for (let col = 0; col < this.blocksCol; col++) {
+                const p = this.array[row][col];
+                const k = this.table.array[row][col];
+                k.num = p;
+                k.elm.style.background = COLORS[p];
+            }
+        }
+        if (!this.minos) return;
+        for (const mino of this.minos) {
+            for (let y = 0; y < 4; y++) {
+                for (let x = 0; x < 4; x++) {
+                    const p = MINO_SHAPE[mino.type][mino.rotate][y][x];
+                    if (p) {
+                        const k = this.table.array[mino.y + y][mino.x + x];
+                        k.num = p;
+                        k.elm.style.background = mino.fillColor;
+                    }
+                }
+            }
+        }
     }
 }
 
