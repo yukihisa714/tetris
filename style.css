@@ -21,11 +21,7 @@
     text-align: center;
     background-color: #888;
     margin: 0.5rem;
-}
-
-.hold-td {
-    width: 0.5rem;
-    height: 0.5rem;
+    border-spacing: 0.15rem;
 }
 
 #main {
@@ -33,12 +29,20 @@
     border-right: 1px solid black;
 }
 
+.hold-td {
+    width: 0.5rem;
+    height: 0.5rem;
+    /* border: 0.1rem solid; */
+}
+
 .main-td {
     width: 1rem;
     height: 1rem;
+    /* border: 0.1rem solid; */
 }
 
 .future-td {
     width: 0.5rem;
     height: 0.5rem;
+    /* border: 0.1rem solid; */
 }

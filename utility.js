@@ -1,10 +1,11 @@
 class Table {
-    constructor(id, tdId, col, row, color) {
+    constructor(id, tdClass, col, row, fillColor, strokeColor) {
         this.id = id;
-        this.tdId = tdId;
+        this.tdClass = tdClass;
         this.col = col;
         this.row = row;
-        this.color = color;
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
 
         this.tableElm = document.getElementById(this.id);
         this.array = [];
@@ -14,8 +15,9 @@ class Table {
             this.array[row] = [];
             for (let col = 0; col < this.col; col++) {
                 const td = document.createElement("td");
-                td.style.background = this.color;
-                td.classList.add(this.tdId);
+                td.style.background = this.fillColor;
+                td.style.borderColor = this.strokeColor;
+                td.classList.add(this.tdClass);
                 tr.appendChild(td);
                 this.array[row][col] = { num: 0, elm: td };
             }
@@ -24,7 +26,8 @@ class Table {
     clearColor() {
         for (let row = 0; row < this.row; row++) {
             for (let col = 0; col < this.col; col++) {
-                this.array[row][col].elm.style.background = this.color;
+                this.array[row][col].elm.style.background = this.fillColor;
+                // this.array[row][col].elm.style.borderColor = this.strokeColor;
             }
         }
     }
@@ -39,7 +42,7 @@ class Field {
      * @param {String} canvasId キャンバスのID
      * @param {String} color キャンバスの色
      */
-    constructor(blockSize, col, row, tableId, tableColor, tdId) {
+    constructor(blockSize, col, row, tableId, tableColor, tdClass) {
         this.blockSize = blockSize;
         this.blocksCol = col;
         this.blocksRow = row;
@@ -49,8 +52,9 @@ class Field {
         this.array = make2dArray(this.blocksCol, this.blocksRow);
         this.tableId = tableId;
         this.tableColor = tableColor;
-        this.tdId = tdId;
-        this.table = new Table(this.tableId, this.tdId, this.blocksCol, this.blocksRow, this.tableColor);
+        // this.tableStrokeColor = tableStrokeColor;
+        this.tdClass = tdClass;
+        this.table = new Table(this.tableId, this.tdClass, this.blocksCol, this.blocksRow, this.tableColor);
 
         this.minos = [];
     }
@@ -73,6 +77,7 @@ class Field {
                         const k = this.table.array[mino.y + y][mino.x + x];
                         k.num = p;
                         k.elm.style.background = mino.fillColor;
+                        // k.elm.style.borderColor = mino.strokeColor;
                     }
                 }
             }

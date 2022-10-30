@@ -194,7 +194,7 @@ class Mino {
         this.deathStart = false;
         this.reality = reality;
 
-        this.fillColor = reality ? COLORS[this.type] : "silver";
+        this.fillColor = reality ? COLORS[this.type] : "#ccc";
         this.strokeColor = reality ? "black" : "lightgray";
 
         this.keyCount = {
