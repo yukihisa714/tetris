@@ -29,7 +29,7 @@ const GAME_STATES = {
 let nowGameState = GAME_STATES.beforeGame;
 
 function removeLine() {
-    for (let y = FIELDS.main.blocksRow - 1; y >= 0; y--) {
+    for (let y = FIELDS.main.row - 1; y >= 0; y--) {
         let p = 1;
         for (const x of FIELDS.main.array[y]) {
             p *= x;
@@ -38,7 +38,7 @@ function removeLine() {
         for (let py = y; py >= 1; py--) {
             FIELDS.main.array[py] = FIELDS.main.array[py - 1];
         }
-        FIELDS.main.array[0] = Array(10).fill(0);
+        FIELDS.main.array[0] = Array(FIELDS.main.col).fill(0);
         y++;
     }
 }

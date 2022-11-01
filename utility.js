@@ -44,24 +44,20 @@ class Field {
      */
     constructor(blockSize, col, row, tableId, tableColor, tdClass) {
         this.blockSize = blockSize;
-        this.blocksCol = col;
-        this.blocksRow = row;
-        this.width = this.blockSize * this.blocksCol;
-        this.height = this.blockSize * this.blocksRow;
-
-        this.array = make2dArray(this.blocksCol, this.blocksRow);
+        this.col = col;
+        this.row = row;
+        this.array = make2dArray(this.col, this.row);
         this.tableId = tableId;
         this.tableColor = tableColor;
         // this.tableStrokeColor = tableStrokeColor;
         this.tdClass = tdClass;
-        this.table = new Table(this.tableId, this.tdClass, this.blocksCol, this.blocksRow, this.tableColor);
-
+        this.table = new Table(this.tableId, this.tdClass, this.col, this.row, this.tableColor);
         this.minos = [];
     }
     draw() {
         this.table.clearColor();
-        for (let row = 0; row < this.blocksRow; row++) {
-            for (let col = 0; col < this.blocksCol; col++) {
+        for (let row = 0; row < this.row; row++) {
+            for (let col = 0; col < this.col; col++) {
                 const p = this.array[row][col];
                 const k = this.table.array[row][col];
                 k.num = p;

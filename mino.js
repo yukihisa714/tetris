@@ -190,7 +190,7 @@ class Mino {
         this.type = type;
         this.rotate = 0;
         this.maxStrength = 60 * 1;
-        this.strength = this.maxStrength;
+        this.damage = 0;
         this.deathStart = false;
         this.reality = reality;
 
@@ -230,8 +230,8 @@ class Mino {
                 if (MINO_SHAPE[this.type][(this.rotate + rotate + 4) % 4][y][x]) {
                     const newX = this.x + moveX + x;
                     const newY = this.y + moveY + y;
-                    if (newX < 0 || FIELDS.main.blocksCol <= newX) return false;
-                    if (newY < 0 || FIELDS.main.blocksRow <= newY) return false;
+                    if (newX < 0 || FIELDS.main.col <= newX) return false;
+                    if (newY < 0 || FIELDS.main.row <= newY) return false;
                     if (FIELDS.main.array[newY][newX]) return false;
                 }
             }
@@ -297,8 +297,8 @@ class Mino {
 
         if (!this.check(0, 1, 0)) {
             if (this.deathStart) {
-                this.strength--;
-                if (!this.strength) {
+                this.damage++;
+                if (this.damage === this.maxStrength) {
                     this.setMino();
                     removeLine();
                     makeMino();
@@ -324,7 +324,7 @@ function dropPredictMino() {
 let typeNums = [1, 2, 3, 4, 5, 6, 7];
 
 function makeFutureTypes() {
-    while (FIELDS.future.minos.length < FIELDS.future.blocksRow / 4) {
+    while (FIELDS.future.minos.length < FIELDS.future.row / 4) {
         const num = makeRandom(0, typeNums.length);
         const type = typeNums[num];
         FIELDS.future.minos.push(new Mino(0, 0, FIELDS.future.blockSize, type, true));
@@ -336,7 +336,7 @@ function makeFutureTypes() {
 }
 
 function makeMino() {
-    let newType = FIELDS.future.minos[0].type;
+    const newType = FIELDS.future.minos[0].type;
     FIELDS.main.minos[1] = new Mino(3, 0, FIELDS.main.blockSize, newType, true);
     FIELDS.main.minos[0] = new Mino(3, 0, FIELDS.main.blockSize, newType, false);
 
