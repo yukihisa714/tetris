@@ -198,12 +198,48 @@ class Mino {
         this.strokeColor = reality ? "black" : "lightgray";
 
         this.keyCount = {
-            "ArrowUp": 0,
-            "ArrowDown": 0,
-            "ArrowLeft": 0,
-            "ArrowRight": 0,
-            "z": 0,
-            "x": 0,
+            "ArrowUp": {
+                count: 0,
+                often: 15,
+                x: 0,
+                y: 0,
+                rotate: 1,
+            },
+            "ArrowDown": {
+                count: 0,
+                often: 9,
+                x: 0,
+                y: 1,
+                rotate: 0,
+            },
+            "ArrowLeft": {
+                count: 0,
+                often: 9,
+                x: -1,
+                y: 0,
+                rotate: 0,
+            },
+            "ArrowRight": {
+                count: 0,
+                often: 9,
+                x: 1,
+                y: 0,
+                rotate: 0,
+            },
+            "z": {
+                count: 0,
+                often: 15,
+                x: 0,
+                y: 0,
+                rotate: -1,
+            },
+            "x": {
+                count: 0,
+                often: 15,
+                x: 0,
+                y: 0,
+                rotate: 1,
+            },
         };
     }
     // ミノをフィールドに固定する
@@ -277,23 +313,19 @@ class Mino {
      * @param {Number} y y変異
      * @param {Number} r rotate変異
      */
-    keyControl(key, often, x, y, r) {
-        this.keyCount[key] = keyOpe[key] ? this.keyCount[key] + 1 : 0;
-        if (this.keyCount[key] % often === 1) this.moveMino(x, y, r);
+    keyControl(key) {
+        const p = this.keyCount[key];
+        p.count = keyOpe[key] ? p.count + 1 : 0;
+        if (p.count % p.often === 1) this.moveMino(p.x, p.y, p.rotate);
     }
-    // keyControl(key, often, x, y, r) {
-    //     const p = keyOpe[key] >> 0;
-    //     this.keyCount[key] = this.keyCount[key] * p + p;
-    //     if (this.keyCount[key] % often === 1) this.moveMino(x, y, r);
-    // }
     update() {
 
-        this.keyControl("ArrowUp", 15, 0, 0, 1);
-        this.keyControl("ArrowDown", 9, 0, 1, 0);
-        this.keyControl("ArrowLeft", 9, -1, 0, 0);
-        this.keyControl("ArrowRight", 9, 1, 0, 0);
-        this.keyControl("z", 15, 0, 0, -1);
-        this.keyControl("x", 15, 0, 0, 1);
+        this.keyControl("ArrowUp");
+        this.keyControl("ArrowDown");
+        this.keyControl("ArrowLeft");
+        this.keyControl("ArrowRight");
+        this.keyControl("z");
+        this.keyControl("x");
 
         if (!this.check(0, 1, 0)) {
             if (this.deathStart) {
