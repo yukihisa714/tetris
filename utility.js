@@ -5,7 +5,7 @@ class Table {
         this.col = col;
         this.row = row;
         this.fillColor = fillColor;
-        this.strokeColor = strokeColor;
+        // this.strokeColor = strokeColor;
 
         this.tableElm = document.getElementById(this.id);
         this.array = [];
@@ -24,10 +24,9 @@ class Table {
         }
     }
     clearColor() {
-        for (let row = 0; row < this.row; row++) {
-            for (let col = 0; col < this.col; col++) {
-                this.array[row][col].elm.style.background = this.fillColor;
-                // this.array[row][col].elm.style.borderColor = this.strokeColor;
+        for (const col of this.array) {
+            for (const p of col) {
+                p.elm.style.background = this.fillColor;
             }
         }
     }
